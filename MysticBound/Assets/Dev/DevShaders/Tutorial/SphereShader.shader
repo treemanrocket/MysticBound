@@ -5,7 +5,7 @@ Shader "Unlit/SphereShader"
     Properties
     {
         _Tint ("Tint", Color) = (1,1,1,1)
-        _MainTex ("Texture", 2D) = "White" {}
+        _MainTex ("Texture", 2D) = "white" {}
     }
     
     SubShader 
