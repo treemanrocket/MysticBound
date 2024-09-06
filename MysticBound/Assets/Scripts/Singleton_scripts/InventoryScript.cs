@@ -10,12 +10,17 @@ public class InventoryScript : MonoBehaviour
     public static InventoryScript instance;
     private void Awake()
     {
-        if (instance != null)
+        if (instance != null && instance != this)
         {
+            Destroy(gameObject);
             return;
         }
-
-        instance = this;
+        else 
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        
     }
     #endregion
 
