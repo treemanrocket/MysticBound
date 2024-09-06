@@ -37,4 +37,7 @@ public class WeaponScript : ScriptableObject
     public int damage;
     public int attackSpeed;
 
+
+    [Header("UI")]
+    public Sprite icon;
 }

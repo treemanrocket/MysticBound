@@ -21,4 +21,6 @@ public class ArmorScripts : ScriptableObject
     [Header("Stats")]
     public int armorValue;
 
+    [Header("UI")]
+    public Sprite icon;
 }
