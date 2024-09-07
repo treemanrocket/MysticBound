@@ -5,12 +5,18 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class CustomButtonScript : MonoBehaviour, IPointerClickHandler
 {
     public UnityEvent leftClick;
     public UnityEvent middleClick;
     public UnityEvent rightClick;
+
+    private InventoryScript inventoryScript;
+
+
+   
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -24,12 +30,35 @@ public class CustomButtonScript : MonoBehaviour, IPointerClickHandler
 
     public void EquipItem()
     {
-        Debug.Log("equip button was clicked " + this);
+        switch (InventoryScript.instance.inventoryStates)
+        {
+            case InventoryScript.InventoryState.ITEMS:
+                Debug.Log("use button was clicked " + this);
+                break;
+            case InventoryScript.InventoryState.WEAPONS:
+                Debug.Log("equip button for weapon was clicked " + this);
+                break;
+            case InventoryScript.InventoryState.ARMOR:
+                Debug.Log("equip button for armor was clicked " + this);
+                break;
+        }
+        
     }
 
     public void RemoveItem()
     {
-        Debug.Log("remove button was clicked " + this);
+        switch (InventoryScript.instance.inventoryStates)
+        {
+            case InventoryScript.InventoryState.ITEMS:
+                Debug.Log("remove button was clicked " + this);
+                break;
+            case InventoryScript.InventoryState.WEAPONS:
+                Debug.Log("remove button for weapon was clicked " + this);
+                break;
+            case InventoryScript.InventoryState.ARMOR:
+                Debug.Log("remove button for armor was clicked " + this);
+                break;
+        }
     }
    
 }

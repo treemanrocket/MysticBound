@@ -24,6 +24,20 @@ public class InventoryScript : MonoBehaviour
     }
     #endregion
 
+    #region/*STATE*/
+    public enum InventoryState
+    {
+        ITEMS,
+        WEAPONS,
+        ARMOR
+    }
+
+    [Header("InventoryStates")]
+    [Tooltip("This will be the inventory state where it will show if the inventory is on items, weapons, or armor category")]
+    public InventoryState inventoryStates;
+
+    #endregion
+
     #region /*INVENTORY*/
     [Header("INVENTORY")]
     [Tooltip("limit for how many items you can have in the inventory")][SerializeField] private int inventoryLimit;
