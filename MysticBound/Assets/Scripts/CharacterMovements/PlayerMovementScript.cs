@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement; //get rid of this soon when we have a scene manager script
 
 public class PlayerMovementScript : MonoBehaviour
 {
@@ -19,6 +21,13 @@ public class PlayerMovementScript : MonoBehaviour
     void Update()
     {
         rigidBody.velocity = new Vector2(moveInputs.x * speed, rigidBody.velocity.y);
+
+        //quick dev tool this goes into a different scene to test the singleton and the inventory
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SceneManager.LoadScene("Albert_Dev 1");
+        }
+
     }
 
     #region /*MOVEMENT*/
@@ -36,4 +45,5 @@ public class PlayerMovementScript : MonoBehaviour
         }
     }
     #endregion
+
 }

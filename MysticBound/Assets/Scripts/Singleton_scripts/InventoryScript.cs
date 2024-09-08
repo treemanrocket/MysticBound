@@ -74,4 +74,23 @@ public class InventoryScript : MonoBehaviour
     [Tooltip("a list of how many armos")] public List<ArmorData> ArmorList = new List<ArmorData>();
     #endregion
 
+    #region/*CHANGE STATES*/
+
+    public void ChangeToItems()
+    {
+        inventoryStates = InventoryState.ITEMS;
+    }
+
+    public void ChangeToWeapons()
+    {
+        inventoryStates = InventoryState.WEAPONS;
+    }
+
+    public void ChangeToArmor()
+    {
+        inventoryStates = InventoryState.ARMOR;
+    }
+
+    #endregion
+
 }
