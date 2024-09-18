@@ -51,7 +51,7 @@ public class InventoryScript : MonoBehaviour
 
 
     [Header ("WeaponList")]
-    [Tooltip("limit for how many weapons you can have in the weapon list")][SerializeField] private int WeaponLimit;
+    [Tooltip("limit for how many weapons you can have in the weapon list")][SerializeField] private int weaponLimit;
     [System.Serializable]
     public struct WeaponData
     {
@@ -63,7 +63,7 @@ public class InventoryScript : MonoBehaviour
 
 
     [Header("ArmorList")]
-    [Tooltip("limit for how many armors you can have in the armor list")][SerializeField] private int ArmorLimit;
+    [Tooltip("limit for how many armors you can have in the armor list")][SerializeField] private int armorLimit;
     [System.Serializable]
     public struct ArmorData
     {
@@ -71,7 +71,7 @@ public class InventoryScript : MonoBehaviour
         public GameObject ArmorDataGameObject;
         public ArmorScripts armorScripts;
     }
-    [Tooltip("a list of how many armos")] public List<ArmorData> ArmorList = new List<ArmorData>();
+    [Tooltip("a list of how many armos")] public List<ArmorData> armorList = new List<ArmorData>();
     #endregion
 
     #region/*CHANGE STATES*/
@@ -89,6 +89,31 @@ public class InventoryScript : MonoBehaviour
     public void ChangeToArmor()
     {
         inventoryStates = InventoryState.ARMOR;
+    }
+
+    #endregion
+
+    #region /*ARMOR INVENTORY*/
+
+    public void AddArmor(GameObject gameArmor, Sprite armorIcons, ArmorScripts armorScriptsObject)
+    {
+        if (armorList.Count < armorLimit)
+        {
+            armorList.Add(new ArmorData { ArmorDataSprite = armorIcons, ArmorDataGameObject = gameArmor, armorScripts = armorScriptsObject });
+
+            //OnItemCallBack?.Invoke();
+        }
+
+        else if (armorList.Count >= armorLimit)
+        {
+            Debug.Log("this is exceeding the limit");
+        }
+    }
+
+    public void RemoveArmor(GameObject gameArmor, Sprite armorIcons, ArmorScripts armorScriptsObject)
+    {
+        armorList.Remove(new ArmorData { ArmorDataSprite = armorIcons, ArmorDataGameObject = gameArmor, armorScripts = armorScriptsObject });
+        //OnItemCallBack?.Invoke();
     }
 
     #endregion
