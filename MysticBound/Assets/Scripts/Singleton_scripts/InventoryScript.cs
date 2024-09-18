@@ -99,7 +99,10 @@ public class InventoryScript : MonoBehaviour
     {
         if (armorList.Count < armorLimit)
         {
-            armorList.Add(new ArmorData { ArmorDataSprite = armorIcons, ArmorDataGameObject = gameArmor, armorScripts = armorScriptsObject });
+            armorList.Add(new ArmorData { 
+                ArmorDataSprite = armorIcons, 
+                ArmorDataGameObject = gameArmor, 
+                armorScripts = armorScriptsObject });
 
             //OnItemCallBack?.Invoke();
         }
@@ -112,7 +115,40 @@ public class InventoryScript : MonoBehaviour
 
     public void RemoveArmor(GameObject gameArmor, Sprite armorIcons, ArmorScripts armorScriptsObject)
     {
-        armorList.Remove(new ArmorData { ArmorDataSprite = armorIcons, ArmorDataGameObject = gameArmor, armorScripts = armorScriptsObject });
+        armorList.Remove(new ArmorData { 
+            ArmorDataSprite = armorIcons, 
+            ArmorDataGameObject = gameArmor, 
+            armorScripts = armorScriptsObject });
+        //OnItemCallBack?.Invoke();
+    }
+
+    #endregion
+    #region /*WEAPON INVENTORY*/
+
+    public void AddWeapon(GameObject gameWeapon, Sprite weaponIcons, WeaponScript weaponScriptsObject)
+    {
+        if (WeaponList.Count < weaponLimit)
+        {
+            WeaponList.Add(new WeaponData { 
+                WeaponDataSprite = weaponIcons,
+                WeaponDataGameObject = gameWeapon, 
+                weaponScripts = weaponScriptsObject });
+
+            //OnItemCallBack?.Invoke();
+        }
+
+        else if (WeaponList.Count >= weaponLimit)
+        {
+            Debug.Log("this is exceeding the limit");
+        }
+    }
+
+    public void RemoveWeapon(GameObject gameWeapon, Sprite weaponIcons, WeaponScript weaponScriptsObject)
+    {
+        WeaponList.Remove(new WeaponData {
+            WeaponDataSprite = weaponIcons,
+            WeaponDataGameObject = gameWeapon,
+            weaponScripts = weaponScriptsObject });
         //OnItemCallBack?.Invoke();
     }
 

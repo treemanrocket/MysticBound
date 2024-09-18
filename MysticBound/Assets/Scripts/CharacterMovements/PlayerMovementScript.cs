@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement; //get rid of this soon when we have a scene manager script
 
-public class PlayerMovementScript : MonoBehaviour
+public class PlayerMovementScript : MonoBehaviour, IPickable
 {
     [Header("Variables")]
     private Rigidbody rigidBody;
@@ -45,5 +45,14 @@ public class PlayerMovementScript : MonoBehaviour
         }
     }
     #endregion
-   
+
+    public void PickupArmor(GameObject armorGameObject, Sprite armorIcon, ArmorScripts armorBehavior)
+    {
+        InventoryScript.instance.AddArmor(armorGameObject, armorIcon, armorBehavior);
+    }
+
+    public void PickupWeapon(GameObject weaponGameObject, Sprite weaponIcon, WeaponScript weaponBehavior)
+    {
+        InventoryScript.instance.AddWeapon(weaponGameObject, weaponIcon, weaponBehavior);
+    }
 }
