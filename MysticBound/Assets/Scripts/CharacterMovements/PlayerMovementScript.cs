@@ -11,10 +11,29 @@ public class PlayerMovementScript : MonoBehaviour, IPickable
     private Rigidbody rigidBody;
     [SerializeField] private float speed;
     private Vector2 moveInputs;
+
+    #region /*SINGLETON*/
+    public static PlayerMovementScript instance;
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
+    }
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
+        
     }
 
     // Update is called once per frame
