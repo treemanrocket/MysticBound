@@ -18,13 +18,20 @@ public class CustomButtonScript : MonoBehaviour, IPointerClickHandler
    
     private InventoryScript inventoryScript;
 
+    private Inventory_UI_Script inventoryUIScript;
     //will need to make a delegate for the inventory script so that it can call on the two functions, MakeButtonsActive and
     //MakeButtonsInactive
     void Awake()
     {
         inventoryActive = false;
+        inventoryUIScript = GetComponentInParent<Inventory_UI_Script>();
     }
 
+    private void Start()
+    {
+        inventoryUIScript.toggleInventoryOnCallBack += MakeButtonsActive;
+        inventoryUIScript.toggleInventoryOffCallBack += MakeButtonsInactive;
+    }
     void MakeButtonsActive()
     {
         inventoryActive = true;

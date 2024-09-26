@@ -14,11 +14,21 @@ public class Inventory_UI_Script : MonoBehaviour
 
     public Transform inventoryParent;
 
+
+    Inventory_Slot_Scripts inventorySlots;
+
+    public delegate void OnToggleInventoryOn();
+    public OnToggleInventoryOn toggleInventoryOnCallBack;
+
+    public delegate void OnToggleInventoryOff();
+    public OnToggleInventoryOff toggleInventoryOffCallBack;
+
+    
     //InventorySlot will need to have the inventory slot script
 
     private void Awake()
     {
-        
+       
 
 
     }
@@ -40,7 +50,18 @@ public class Inventory_UI_Script : MonoBehaviour
     #region /*INVENTORY_TOGGLE*/
     public void OnInventoryToggle(InputAction.CallbackContext ctx)
     {
-        Debug.Log("the dokizeme");
+        if (!inventoryOn) 
+        {
+            inventoryOn = true;
+            toggleInventoryOnCallBack?.Invoke();
+            
+        }
+        
+        else if (inventoryOn) 
+        {
+            inventoryOn = false;
+            toggleInventoryOffCallBack?.Invoke();
+        }
     }
     #endregion
 }
