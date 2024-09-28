@@ -15,7 +15,7 @@ public class Inventory_UI_Script : MonoBehaviour
     public Transform inventoryParent;
 
 
-    Inventory_Slot_Scripts inventorySlots;
+    Inventory_Slot_Scripts [] inventorySlots;
 
     public delegate void OnToggleInventoryOn();
     public OnToggleInventoryOn toggleInventoryOnCallBack;
@@ -23,14 +23,21 @@ public class Inventory_UI_Script : MonoBehaviour
     public delegate void OnToggleInventoryOff();
     public OnToggleInventoryOff toggleInventoryOffCallBack;
 
+
     
-    //InventorySlot will need to have the inventory slot script
 
     private void Awake()
     {
-       
+        inventoryScript = InventoryScript.instance;
+        inventoryScript.OnItemCallBack += UpdateInventoryUI;
+        imageChilderens = GetComponentsInChildren<Image>();
+        buttonChilderens = GetComponentsInChildren<Button>();
+        inventorySlots = inventoryParent.GetComponentsInChildren<Inventory_Slot_Scripts>();
 
-
+        if (inventoryScript.OnItemCallBack != null)
+        {
+            Debug.Log("this is subscribed");
+        }
     }
 
     // Start is called before the first frame update
@@ -38,7 +45,17 @@ public class Inventory_UI_Script : MonoBehaviour
     {
         inventoryOn = false;
 
+        foreach (Image itemImage in imageChilderens)
+        {
+            Color alpha = itemImage.color;
+            alpha.a = 0;
+            itemImage.color = alpha;
+        }
 
+        foreach (Button buttons in buttonChilderens)
+        {
+            buttons.interactable = false;
+        }
     }
 
     // Update is called once per frame
@@ -47,6 +64,70 @@ public class Inventory_UI_Script : MonoBehaviour
         
     }
 
+    public void UpdateInventoryUI()
+    {
+        #region /*WEAPONS_INVENTORY*/
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            if (i < inventoryScript.weaponList.Count)
+            {
+                inventorySlots[i].AddWeaponInventory(
+                inventoryScript.weaponList[i].WeaponDataGameObject,
+                inventoryScript.weaponList[i].WeaponDataSprite,
+                inventoryScript.weaponList[i].weaponScripts);
+            }
+            else 
+            {
+                inventorySlots[i].RemoveWeaponInventory();
+            }
+        }
+      
+        #endregion
+
+        #region /*ARMORS_INVENTORY*/
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            if (i < inventoryScript.armorList.Count)
+            {
+                inventorySlots[i].AddArmorInventory(
+                inventoryScript.armorList[i].ArmorDataGameObject,
+                inventoryScript.armorList[i].ArmorDataSprite,
+                inventoryScript.armorList[i].armorScripts);
+            }
+            else
+            {
+                inventorySlots[i].RemoveArmorInventory();
+            }
+        }
+
+
+        #endregion
+    }
+    public void ChangeWeaponUI()
+    {
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            if (inventorySlots[i].weaponItems != null)
+            {
+                inventorySlots[i].weaponIcon.enabled = true;
+                inventorySlots[i].armorIcon.enabled = false;
+            }
+        
+        }
+    }
+
+    public void ChangeArmorUI()
+    {
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            if (inventorySlots[i].armorItems != null) 
+            {
+                inventorySlots[i].weaponIcon.enabled = false;
+                inventorySlots[i].armorIcon.enabled = true;
+            }
+            
+        }
+    }
     #region /*INVENTORY_TOGGLE*/
     public void OnInventoryToggle(InputAction.CallbackContext ctx)
     {
@@ -54,13 +135,36 @@ public class Inventory_UI_Script : MonoBehaviour
         {
             inventoryOn = true;
             toggleInventoryOnCallBack?.Invoke();
-            
+
+            foreach (Image itemImage in imageChilderens)
+            {
+                Color alpha = itemImage.color;
+                alpha.a = 1;
+                itemImage.color = alpha;
+            }
+
+            foreach (Button buttons in buttonChilderens)
+            {
+                buttons.interactable = true;
+            }
         }
         
         else if (inventoryOn) 
         {
             inventoryOn = false;
             toggleInventoryOffCallBack?.Invoke();
+
+            foreach (Image itemImage in imageChilderens)
+            {
+                Color alpha = itemImage.color;
+                alpha.a = 0;
+                itemImage.color = alpha;
+            }
+
+            foreach (Button buttons in buttonChilderens)
+            {
+                buttons.interactable = false;
+            }
         }
     }
     #endregion

@@ -24,6 +24,9 @@ public class InventoryScript : MonoBehaviour
     }
     #endregion
 
+    public delegate void OnItemChanged();
+    public OnItemChanged OnItemCallBack;
+
     #region/*STATE*/
     public enum InventoryState
     {
@@ -59,7 +62,7 @@ public class InventoryScript : MonoBehaviour
         public GameObject WeaponDataGameObject;
         public WeaponScript weaponScripts;
     }
-    [Tooltip("a list of how many weapons")] public List<WeaponData> WeaponList = new List<WeaponData>();
+    [Tooltip("a list of how many weapons")] public List<WeaponData> weaponList = new List<WeaponData>();
 
 
     [Header("ArmorList")]
@@ -104,7 +107,7 @@ public class InventoryScript : MonoBehaviour
                 ArmorDataGameObject = gameArmor, 
                 armorScripts = armorScriptsObject });
 
-            //OnItemCallBack?.Invoke();
+               OnItemCallBack?.Invoke();
         }
 
         else if (armorList.Count >= armorLimit)
@@ -119,7 +122,8 @@ public class InventoryScript : MonoBehaviour
             ArmorDataSprite = armorIcons, 
             ArmorDataGameObject = gameArmor, 
             armorScripts = armorScriptsObject });
-        //OnItemCallBack?.Invoke();
+
+            OnItemCallBack?.Invoke();
     }
 
     #endregion
@@ -127,17 +131,17 @@ public class InventoryScript : MonoBehaviour
 
     public void AddWeapon(GameObject gameWeapon, Sprite weaponIcons, WeaponScript weaponScriptsObject)
     {
-        if (WeaponList.Count < weaponLimit)
+        if (weaponList.Count < weaponLimit)
         {
-            WeaponList.Add(new WeaponData { 
+            weaponList.Add(new WeaponData { 
                 WeaponDataSprite = weaponIcons,
                 WeaponDataGameObject = gameWeapon, 
                 weaponScripts = weaponScriptsObject });
 
-            //OnItemCallBack?.Invoke();
+              OnItemCallBack?.Invoke();
         }
 
-        else if (WeaponList.Count >= weaponLimit)
+        else if (weaponList.Count >= weaponLimit)
         {
             Debug.Log("this is exceeding the limit");
         }
@@ -145,11 +149,12 @@ public class InventoryScript : MonoBehaviour
 
     public void RemoveWeapon(GameObject gameWeapon, Sprite weaponIcons, WeaponScript weaponScriptsObject)
     {
-        WeaponList.Remove(new WeaponData {
+        weaponList.Remove(new WeaponData {
             WeaponDataSprite = weaponIcons,
             WeaponDataGameObject = gameWeapon,
             weaponScripts = weaponScriptsObject });
-        //OnItemCallBack?.Invoke();
+
+          OnItemCallBack?.Invoke();
     }
 
     #endregion

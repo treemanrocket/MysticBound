@@ -5,7 +5,7 @@ using static InventoryScript;
 
 public class Change_Inventory_StateScript : MonoBehaviour
 {
- 
+   
     public void ChangeToWeapons()
     {
         InventoryScript.instance.inventoryStates = InventoryState.WEAPONS;
