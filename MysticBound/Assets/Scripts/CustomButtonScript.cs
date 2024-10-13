@@ -29,20 +29,22 @@ public class CustomButtonScript : MonoBehaviour, IPointerClickHandler
 
     private void Start()
     {
-        inventoryUIScript.toggleInventoryOnCallBack += MakeButtonsActive;
-        inventoryUIScript.toggleInventoryOffCallBack += MakeButtonsInactive;
-    }
-    void MakeButtonsActive()
+       
+        inventoryUIScript.toggleInventoryCallBack += MakeButtonsToggle;
+    }   
+
+    void MakeButtonsToggle()
     {
-        inventoryActive = true;
+        if (inventoryActive) 
+        {
+            inventoryActive = false;
+        }
+
+        else 
+        {
+            inventoryActive = true;
+        }
     }
-
-    void MakeButtonsInactive()
-    {
-        inventoryActive = false;
-    }
-
-
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left)

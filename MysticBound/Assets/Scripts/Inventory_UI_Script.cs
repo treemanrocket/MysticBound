@@ -17,13 +17,8 @@ public class Inventory_UI_Script : MonoBehaviour
 
     Inventory_Slot_Scripts [] inventorySlots;
 
-    public delegate void OnToggleInventoryOn();
-    public OnToggleInventoryOn toggleInventoryOnCallBack;
-
-    public delegate void OnToggleInventoryOff();
-    public OnToggleInventoryOff toggleInventoryOffCallBack;
-
-
+    public delegate void OnToggleInventory();
+    public OnToggleInventory toggleInventoryCallBack;
     
 
     private void Awake()
@@ -130,40 +125,44 @@ public class Inventory_UI_Script : MonoBehaviour
     }
     #region /*INVENTORY_TOGGLE*/
     public void OnInventoryToggle(InputAction.CallbackContext ctx)
-    {
-        if (!inventoryOn) 
+    {        
+
+        if (ctx.started)
         {
-            inventoryOn = true;
-            toggleInventoryOnCallBack?.Invoke();
-
-            foreach (Image itemImage in imageChilderens)
+            if (!inventoryOn)
             {
-                Color alpha = itemImage.color;
-                alpha.a = 1;
-                itemImage.color = alpha;
+                inventoryOn = true;
+                toggleInventoryCallBack?.Invoke();
+
+                foreach (Image itemImage in imageChilderens)
+                {
+                    Color alpha = itemImage.color;
+                    alpha.a = 1;
+                    itemImage.color = alpha;
+                }
+
+                foreach (Button buttons in buttonChilderens)
+                {
+                    buttons.interactable = true;
+                }
             }
 
-            foreach (Button buttons in buttonChilderens)
+            else if (inventoryOn)
             {
-                buttons.interactable = true;
-            }
-        }
-        
-        else if (inventoryOn) 
-        {
-            inventoryOn = false;
-            toggleInventoryOffCallBack?.Invoke();
+                inventoryOn = false;
+                toggleInventoryCallBack?.Invoke();
 
-            foreach (Image itemImage in imageChilderens)
-            {
-                Color alpha = itemImage.color;
-                alpha.a = 0;
-                itemImage.color = alpha;
-            }
+                foreach (Image itemImage in imageChilderens)
+                {
+                    Color alpha = itemImage.color;
+                    alpha.a = 0;
+                    itemImage.color = alpha;
+                }
 
-            foreach (Button buttons in buttonChilderens)
-            {
-                buttons.interactable = false;
+                foreach (Button buttons in buttonChilderens)
+                {
+                    buttons.interactable = false;
+                }
             }
         }
     }
